@@ -2,20 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-obsidian-950 text-white antialiased;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for the prompt textarea */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #262633;
-  border-radius: 3px;
+body {
+  background: #000;
+  color: white;
 }
