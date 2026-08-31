@@ -1,291 +1,223 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from 'react';
+import { Sparkles, Play, ArrowRight, Video, Wand2, Layers, Cpu, Compass, ShoppingBag, ShieldCheck } from 'lucide-react';
 
-// ---------- Types ----------
-type VideoModel = {
-  id: string;
-  name: string;
-  provider: string;
-  description: string;
-  badge?: string;
-  accent: "violet" | "magenta" | "cyan";
-};
+export default function CinematicHomePage() {
+  const [activeTab, setActiveTab] = useState('all');
 
-// ---------- Mock Data ----------
-const videoModels: VideoModel[] = [
-  {
-    id: "kling",
-    name: "Kling 2.0",
-    provider: "Kling AI",
-    description: "Ultra-realistic motion, cinematic physics",
-    badge: "Trending",
-    accent: "violet",
-  },
-  {
-    id: "veo",
-    name: "Veo 3",
-    provider: "Google DeepMind",
-    description: "Long-form coherence, natural language",
-    accent: "magenta",
-  },
-  {
-    id: "sora",
-    name: "Sora Turbo",
-    provider: "OpenAI",
-    description: "Photoreal scenes, complex prompts",
-    accent: "cyan",
-  },
-  {
-    id: "runway",
-    name: "Gen-3 Alpha",
-    provider: "Runway",
-    description: "Artistic control, camera movements",
-    accent: "violet",
-  },
-  {
-    id: "pika",
-    name: "Pika 2.0",
-    provider: "Pika Labs",
-    description: "Fast generation, stylized outputs",
-    accent: "magenta",
-  },
-  {
-    id: "luma",
-    name: "Dream Machine",
-    provider: "Luma AI",
-    description: "High fidelity, 3D awareness",
-    accent: "cyan",
-  },
-];
+  const models = [
+    {
+      id: 'kling-2',
+      name: 'Kling 2.0 Ultra',
+      category: 'Video Generation',
+      description: 'Ultra-realistic motion generation with advanced physics and lighting consistency.',
+      icon: <Video className="w-6 h-6 text-cyan-400" />,
+      tag: 'Most Popular',
+    },
+    {
+      id: 'aura-flux',
+      name: 'Aura Flux Engine',
+      category: 'Cinematic Stills',
+      description: 'Unprecedented text-to-image synthesis with hyper-detailed facial rendering.',
+      icon: <Wand2 className="w-6 h-6 text-fuchsia-400" />,
+      tag: 'New',
+    },
+    {
+      id: 'neural-mesh',
+      name: 'Neural Depth 3D',
+      category: 'Spatial Audio & Depth',
+      description: 'Automatic depth estimation and multi-layer parallax generation for 2.5D scenes.',
+      icon: <Layers className="w-6 h-6 text-amber-400" />,
+      tag: 'Pro',
+    },
+  ];
 
-// ---------- Helper ----------
-const accentColorMap = {
-  violet: "border-aura-violet/40 hover:border-aura-violet hover:shadow-glow-violet",
-  magenta: "border-aura-magenta/40 hover:border-aura-magenta hover:shadow-glow-magenta",
-  cyan: "border-aura-cyan/40 hover:border-aura-cyan hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]",
-};
-
-// ---------- Components ----------
-
-// Hero section with animated glow
-const Hero = () => {
   return (
-    <section className="relative pt-24 pb-16 text-center">
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-hero-glow pointer-events-none" />
+    <main className="min-h-screen bg-[#030305] text-slate-100 selection:bg-cyan-500 selection:text-black relative overflow-hidden font-sans">
+      
+      {/* --- Ambient Background Glow Effects (Gradient Mesh) --- */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none -z-10 animate-pulse duration-1000" />
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-fuchsia-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 left-1/3 w-[700px] h-[700px] bg-blue-900/10 rounded-full blur-[160px] pointer-events-none -z-10" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 max-w-4xl mx-auto px-4"
-      >
-        <p className="inline-block px-4 py-1.5 mb-6 text-sm font-medium tracking-wide uppercase text-aura-violet bg-aura-violet/10 border border-aura-violet/30 rounded-full">
-          New: Kling 2.0 with Motion Brush
-        </p>
+      {/* --- Navbar --- */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/40 border-b border-white/5 transition-all duration-500">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          
+          {/* Logo */}
+          <div className="flex items-center gap-2 cursor-pointer group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300">
+              <Sparkles className="w-5 h-5 text-white animate-spin-slow" />
+            </div>
+            <span className="text-xl font-bold tracking-wider font-serif bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+              AURA STUDIO
+            </span>
+          </div>
 
-        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
-          <span className="bg-gradient-to-r from-white via-white to-aura-violet bg-clip-text text-transparent">
-            Create Cinematic
-          </span>
-          <br />
-          <span className="bg-gradient-to-r from-aura-violet to-aura-magenta bg-clip-text text-transparent">
-            AI Videos
+          {/* Nav Links */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+            <a href="#explore" className="hover:text-white transition-colors duration-300">Explore</a>
+            <a href="#gallery" className="hover:text-white transition-colors duration-300">Gallery</a>
+            <a href="#pricing" className="hover:text-white transition-colors duration-300">Pricing</a>
+            <a href="#docs" className="hover:text-white transition-colors duration-300">Docs</a>
+          </nav>
+
+          {/* Action Button */}
+          <div className="flex items-center gap-4">
+            <a
+              href="#get-started"
+              className="relative inline-flex p-[1px] rounded-full overflow-hidden group active:scale-95 transition-transform duration-150"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 animate-gradient-xy" />
+              <span className="relative px-6 py-2.5 rounded-full bg-[#030305] text-sm font-medium text-white transition-colors duration-300 group-hover:bg-opacity-80 flex items-center gap-2">
+                Get Started
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* --- Hero Section --- */}
+      <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 flex flex-col items-center justify-center text-center">
+        
+        {/* Background Cinematic Video Loop Simulation (Dark Abstract Overlay) */}
+        <div className="absolute inset-0 -z-20 overflow-hidden opacity-35">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#030305]/80 via-transparent to-[#030305]" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover filter brightness-75 contrast-125"
+          >
+            {/* يمكنك استبدال الرابط برابط فيديو حقيقي خفيف ومضغوط */}
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-with-code-31910-large.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-fade-in-up">
+          <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
+          <span className="text-xs font-semibold tracking-wide uppercase text-cyan-300">Introducing Aura Engine 4.0</span>
+        </div>
+
+        {/* Main Heading */}
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight max-w-5xl leading-[1.1] mb-6 text-glow animate-fade-in-up delay-100">
+          Create Cinematic <br />
+          <span className="bg-gradient-to-r from-cyan-400 via-indigo-300 to-fuchsia-500 bg-clip-text text-transparent">
+            AI Videos.
           </span>
         </h1>
 
-        <p className="mt-6 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
-          Turn your imagination into stunning, high‑fidelity video with the world’s most advanced AI models.
-          No camera required.
+        {/* Description */}
+        <p className="text-lg md:text-xl text-slate-400 max-w-2xl font-light mb-10 leading-relaxed animate-fade-in-up delay-200">
+          Unlock unprecedented visual fidelity. Transform complex imaginations into breathtaking, Hollywood-grade motion stories using next-gen generative models.
         </p>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <button className="px-8 py-3 rounded-full bg-aura-violet text-white font-semibold hover:bg-aura-violet/90 transition shadow-glow-violet">
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center animate-fade-in-up delay-300">
+          <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-medium shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-3">
+            <Play className="w-4 h-4 fill-white" />
             Start Creating
           </button>
-          <button className="px-8 py-3 rounded-full border border-gray-700 text-gray-300 hover:border-aura-violet hover:text-white transition">
+          
+          <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/15 backdrop-blur-md transition-all duration-300 hover:border-white/30 flex items-center justify-center gap-2">
+            <Compass className="w-4 h-4 text-slate-300" />
             Explore Gallery
           </button>
         </div>
-      </motion.div>
-    </section>
-  );
-};
 
-// Model selector grid
-const ModelSelector = ({
-  selectedModel,
-  onSelect,
-}: {
-  selectedModel: string;
-  onSelect: (id: string) => void;
-}) => {
-  return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-2xl font-semibold mb-6 text-center sm:text-left">
-        Choose Your Model
-      </h2>
+        {/* Trust Stats / Logos Indicator */}
+        <div className="mt-20 pt-10 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl w-full text-center">
+          <div>
+            <div className="text-2xl md:text-3xl font-serif font-bold text-white">4K / 120FPS</div>
+            <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider">Max Resolution</div>
+          </div>
+          <div>
+            <div className="text-2xl md:text-3xl font-serif font-bold text-white">&lt; 0.4s</div>
+            <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider">Latency Generation</div>
+          </div>
+          <div>
+            <div className="text-2xl md:text-3xl font-serif font-bold text-white">99.8%</div>
+            <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider">Temporal Consistency</div>
+          </div>
+          <div>
+            <div className="text-2xl md:text-3xl font-serif font-bold text-white">10M+</div>
+            <div className="text-xs text-slate-500 mt-1 uppercase tracking-wider">Cinematic Renders</div>
+          </div>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {videoModels.map((model) => (
-          <motion.div
-            key={model.id}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className={`cursor-pointer p-5 rounded-2xl border bg-obsidian-900 backdrop-blur-sm transition-all duration-300 ${
-              selectedModel === model.id
-                ? "border-aura-violet shadow-glow-violet"
-                : accentColorMap[model.accent]
-            }`}
-            onClick={() => onSelect(model.id)}
-          >
-            <div className="flex items-start justify-between">
+      </section>
+
+      {/* --- Model Showcase Section --- */}
+      <section id="explore" className="py-24 px-6 max-w-7xl mx-auto relative">
+        
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-cyan-400 mb-3">Powering Intelligence</h2>
+            <p className="text-3xl md:text-4xl font-serif font-bold text-white">Advanced Generation Models</p>
+          </div>
+          <p className="text-slate-400 text-sm max-w-md mt-4 md:mt-0 font-light">
+            Engineered from the ground up for extreme physical accuracy, cinematic depth of field, and director-level camera controls.
+          </p>
+        </div>
+
+        {/* Grid Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {models.map((model) => (
+            <div
+              key={model.id}
+              className="group relative rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-8 border border-white/10 backdrop-blur-xl hover:border-cyan-500/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)] flex flex-col justify-between"
+            >
+              {/* Top Card Meta */}
               <div>
-                <h3 className="text-lg font-semibold">{model.name}</h3>
-                <p className="text-sm text-gray-500">{model.provider}</p>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                    {model.icon}
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                    {model.tag}
+                  </span>
+                </div>
+
+                <span className="text-xs uppercase tracking-wider text-slate-500 font-semibold">{model.category}</span>
+                <h3 className="text-2xl font-serif font-bold text-white mt-1 mb-3 group-hover:text-cyan-300 transition-colors duration-300">
+                  {model.name}
+                </h3>
+                <p className="text-slate-400 text-sm font-light leading-relaxed mb-6">
+                  {model.description}
+                </p>
               </div>
-              {model.badge && (
-                <span className="px-2 py-1 text-xs bg-aura-magenta/20 text-aura-magenta rounded-full">
-                  {model.badge}
+
+              {/* Card Footer / Hover Details Action */}
+              <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                <span className="text-xs text-slate-500 group-hover:text-white transition-colors duration-300">
+                  Explore weights &amp; specs
                 </span>
-              )}
+                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-all duration-300">
+                  <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-black group-hover:translate-x-0.5 transition-all duration-300" />
+                </div>
+              </div>
             </div>
-            <p className="mt-3 text-sm text-gray-400">{model.description}</p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-// Prompt input & generation control panel
-const PromptPanel = ({
-  selectedModel,
-}: {
-  selectedModel: string;
-}) => {
-  const [prompt, setPrompt] = useState("");
-  const [duration, setDuration] = useState("5s");
-  const [aspectRatio, setAspectRatio] = useState("16:9");
-  const [isGenerating, setIsGenerating] = useState(false);
-
-  const handleGenerate = () => {
-    if (!prompt.trim()) return;
-    setIsGenerating(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsGenerating(false);
-      // In production, this would call your backend generation service
-    }, 2000);
-  };
-
-  return (
-    <section className="max-w-4xl mx-auto px-4 pb-24">
-      <div className="p-6 sm:p-8 rounded-3xl bg-obsidian-900 border border-obsidian-700 backdrop-blur-xl shadow-2xl">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-3 w-3 rounded-full bg-aura-violet animate-pulse-slow" />
-          <span className="text-sm text-gray-400">
-            Using <span className="text-white font-medium">{selectedModel}</span>
-          </span>
+          ))}
         </div>
+      </section>
 
-        {/* Prompt textarea */}
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Describe your video scene, style, camera movement, lighting, mood..."
-          rows={5}
-          className="w-full p-4 bg-obsidian-950 border border-obsidian-700 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-aura-violet focus:ring-1 focus:ring-aura-violet resize-none custom-scrollbar"
-        />
-
-        {/* Controls row */}
-        <div className="mt-6 flex flex-wrap items-center gap-4">
-          {/* Duration selector */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-400">Duration</span>
-            <select
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-              className="bg-obsidian-950 border border-obsidian-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-aura-violet"
-            >
-              <option value="5s">5s</option>
-              <option value="10s">10s</option>
-              <option value="15s">15s</option>
-            </select>
+      {/* --- Footer --- */}
+      <footer className="border-t border-white/5 py-12 px-6 mt-20 text-center text-slate-500 text-xs">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>© 2026 Aura Studio Inc. All rights reserved.</p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-slate-300 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-slate-300 transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-slate-300 transition-colors">Security</a>
           </div>
-
-          {/* Aspect ratio selector */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-400">Aspect</span>
-            <div className="flex rounded-lg overflow-hidden border border-obsidian-700">
-              {["16:9", "9:16", "1:1"].map((ratio) => (
-                <button
-                  key={ratio}
-                  onClick={() => setAspectRatio(ratio)}
-                  className={`px-3 py-2 text-sm transition ${
-                    aspectRatio === ratio
-                      ? "bg-aura-violet text-white"
-                      : "bg-obsidian-950 text-gray-400 hover:text-white"
-                  }`}
-                >
-                  {ratio}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Generate button */}
-          <button
-            onClick={handleGenerate}
-            disabled={!prompt.trim() || isGenerating}
-            className={`ml-auto px-6 py-3 rounded-full font-semibold text-white transition-all ${
-              isGenerating
-                ? "bg-aura-violet/50 cursor-not-allowed"
-                : prompt.trim()
-                ? "bg-aura-violet hover:bg-aura-violet/90 shadow-glow-violet"
-                : "bg-obsidian-700 cursor-not-allowed"
-            }`}
-          >
-            {isGenerating ? (
-              <span className="flex items-center gap-2">
-                <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Generating...
-              </span>
-            ) : (
-              "Generate Video"
-            )}
-          </button>
         </div>
+      </footer>
 
-        {/* Hint */}
-        <AnimatePresence>
-          {!prompt.trim() && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="mt-4 text-sm text-gray-600"
-            >
-              Tip: Be specific about lighting, camera angle, and motion for best results.
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </div>
-    </section>
-  );
-};
-
-// ---------- Main Page ----------
-export default function Home() {
-  const [selectedModel, setSelectedModel] = useState(videoModels[0].id);
-
-  return (
-    <main className="min-h-screen bg-obsidian-950">
-      <Hero />
-      <ModelSelector selectedModel={selectedModel} onSelect={setSelectedModel} />
-      <PromptPanel selectedModel={selectedModel} />
     </main>
   );
-    }
+}
+
